@@ -56,7 +56,7 @@ pub trait BufRead: crate::Io {
     fn consume(&mut self, amt: usize);
 }
 
-type WriteAllFuture<'a, T>
+pub type WriteAllFuture<'a, T>
 where
     T: Write + ?Sized + 'a,
 = impl Future<Output = Result<(), T::Error>> + 'a;
@@ -82,7 +82,7 @@ pub trait Write: crate::Io {
     fn flush<'a>(&'a mut self) -> Self::FlushFuture<'a>;
 
     /// Write an entire buffer into this writer.
-    fn write_all<'a>(&'a mut self, buf: &'a [u8]) -> WriteAllFuture<'a, Self> {
+    pub fn write_all<'a>(&'a mut self, buf: &'a [u8]) -> WriteAllFuture<'a, Self> {
         async move {
             let mut buf = buf;
             while !buf.is_empty() {
