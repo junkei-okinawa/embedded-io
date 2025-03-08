@@ -82,7 +82,7 @@ pub trait Write: crate::Io {
     fn flush<'a>(&'a mut self) -> Self::FlushFuture<'a>;
 
     /// Write an entire buffer into this writer.
-    pub fn write_all<'a>(&'a mut self, buf: &'a [u8]) -> WriteAllFuture<'a, Self> {
+    fn write_all<'a>(&'a mut self, buf: &'a [u8]) -> WriteAllFuture<'a, Self> {
         async move {
             let mut buf = buf;
             while !buf.is_empty() {
